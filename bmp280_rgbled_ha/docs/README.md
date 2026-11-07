@@ -2,7 +2,9 @@
 
 ## Liitäntäparit omilla laudoilla
 
-![BMP280:n ja ESP32-S3:n merkityt liitäntäparit](kytkennat-omilla-laudoilla.svg)
+![BMP280:n ja ESP32-S3:n merkityt liitäntäparit](kytkennat-omilla-laudoilla.png)
+
+[Avaa vektorikuva (SVG)](kytkennat-omilla-laudoilla.svg).
 
 Kuva on otettu ennen johdotusta. Värilliset numerot osoittavat liitäntäparit.
 

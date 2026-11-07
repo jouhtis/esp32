@@ -1,7 +1,7 @@
 #pragma once
 
-#define WIFI_SSID "oma_wifi"
-#define WIFI_PASSWORD "oma_wifi_salasana"
-#define MQTT_SERVER "192.168.0.17"
-#define MQTT_USER "mqtt_user"
-#define MQTT_PASSWORD "mqtt_password"
+#define WIFI_SSID "YOUR_WIFI_NETWORK"
+#define WIFI_PASSWORD "YOUR_WIFI_PASSWORD"
+#define MQTT_SERVER "mqtt.example.com"
+#define MQTT_USER "YOUR_MQTT_USERNAME"
+#define MQTT_PASSWORD "YOUR_MQTT_PASSWORD"

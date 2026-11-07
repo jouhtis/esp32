@@ -7,21 +7,21 @@ Adafruit_BMP280 bmp;
 
 void setupBMP() {
   Wire.begin(SDA_PIN, SCL_PIN);
-  
+
   Serial.println("Etsitään BMP280-sensoria...");
-  
+
   bool found = false;
   byte osoitteet[] = {0x76, 0x77}; // Kaksi yleisintä BMP280-osoitetta
 
   for (int i = 0; i < 2; i++) {
     Serial.print("Yritetään osoitetta: 0x");
     Serial.println(osoitteet[i], HEX);
-    
+
     if (bmp.begin(osoitteet[i])) {
       Serial.print("BMP280 löytyi osoitteesta: 0x");
       Serial.println(osoitteet[i], HEX);
       found = true;
-      break; 
+      break;
     }
   }
 

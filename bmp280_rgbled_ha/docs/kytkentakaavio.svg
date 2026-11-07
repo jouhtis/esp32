@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+<title id="title">ESP32-S3 ja BMP280: I2C-kytkentä</title>
+<desc id="desc">Neljä erillistä johdinta yhdistää ESP32:n 3V3-, GND-, GPIO8- ja GPIO9-liitännät BMP280:n vastaaviin liitäntöihin. Sisäinen RGB-LED on erillinen anturista.</desc>
+<style>
+text{font-family:Arial,sans-serif;fill:#152b38}.title{font-size:30px;font-weight:bold}.sub{font-size:19px}.heading{font-size:25px;font-weight:bold}.pin{font-size:21px;font-weight:bold}.small{font-size:17px}.board{fill:#edf4f6;stroke:#274654;stroke-width:3}.sensor{fill:#eef7ed;stroke:#386342;stroke-width:3}.note{fill:#fff8e4;stroke:#d0a835;stroke-width:2}.wire{fill:none;stroke-width:7;stroke-linecap:round}.p{stroke:#c83737}.g{stroke:#343e48}.d{stroke:#1976b9}.c{stroke:#d78a16}.dot{fill:#fff;stroke:#334;stroke-width:2}
+</style>
+<rect width="1200" height="760" fill="white"/>
+<text x="600" y="46" text-anchor="middle" class="title">ESP32-S3 + BMP280</text>
+<text x="600" y="77" text-anchor="middle" class="sub">Periaatekuva · pinnien fyysinen järjestys riippuu omista laudoista</text>
+<rect x="55" y="115" width="350" height="385" rx="16" class="board"/>
+<text x="230" y="155" text-anchor="middle" class="heading">ESP32-S3</text>
+<text x="230" y="180" text-anchor="middle" class="small">Tarkista GPIO-merkinnät laudasta</text>
+<rect x="795" y="115" width="350" height="385" rx="16" class="sensor"/>
+<text x="970" y="155" text-anchor="middle" class="heading">BMP280-breakout</text>
+<text x="970" y="180" text-anchor="middle" class="small">I²C-tila · 3,3 V:n logiikka</text>
+<text x="100" y="238" class="pin">3V3</text><text x="825" y="238" class="pin">VCC / VIN *</text>
+<text x="100" y="308" class="pin">GND</text><text x="825" y="308" class="pin">GND</text>
+<text x="100" y="378" class="pin">GPIO8 · SDA</text><text x="825" y="378" class="pin">SDA / SDI</text>
+<text x="100" y="448" class="pin">GPIO9 · SCL</text><text x="825" y="448" class="pin">SCL / SCK</text>
+<path d="M405 230 H795" class="wire p"/><path d="M405 300 H795" class="wire g"/><path d="M405 370 H795" class="wire d"/><path d="M405 440 H795" class="wire c"/>
+<g class="dot"><circle cx="405" cy="230" r="6"/><circle cx="795" cy="230" r="6"/><circle cx="405" cy="300" r="6"/><circle cx="795" cy="300" r="6"/><circle cx="405" cy="370" r="6"/><circle cx="795" cy="370" r="6"/><circle cx="405" cy="440" r="6"/><circle cx="795" cy="440" r="6"/></g>
+<rect x="55" y="525" width="1090" height="177" rx="12" class="note"/>
+<text x="78" y="557" class="pin">Ennen virran kytkemistä</text>
+<text x="78" y="585" class="small">* Varmista breakout-levyn käyttöjännite ja pinnit sen omasta ohjeesta; älä syötä ESP32:n GPIO:ihin 5 V.</text>
+<text x="78" y="613" class="small">CS/CSB-, SDO- ja I²C-vetovastuskytkennät riippuvat breakoutista. Tarkista valmistajan ohje.</text>
+<text x="78" y="641" class="small">Firmware: SDA GPIO8, SCL GPIO9; I²C-osoite 0x76 tai 0x77. Sisäinen LED: GPIO48, jos laudalla on sellainen.</text>
+<text x="78" y="669" class="small">LED ei ole BMP280:n osa eikä tarvitse erillistä johtoa, jos se on kytketty kehityslaudalle valmiiksi.</text>
+</svg>

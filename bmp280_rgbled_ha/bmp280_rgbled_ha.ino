@@ -3,19 +3,17 @@
 #include "wifi_mqtt.h"
 
 void setup() {
-  Serial.println("Käynnistetään laite...");
   Serial.begin(115200);
+  Serial.println("Käynnistetään laite...");
   setupLedi();
+  testaaLedinSkaala();
   setupBMP();
+  paivitaLedi(lueLampotila());
   setupWiFi();
   setupMQTT();
 }
 
 void loop() {
-  // Pidetään MQTT yhteys elossa
-  if (!client.connected()) setupMQTT();
-  client.loop();
-
   float t = lueLampotila();
   paivitaLedi(t);
 
@@ -26,10 +24,22 @@ void loop() {
     Serial.print(t);
     Serial.println(" °C");
   }
+  yllapidaMQTT();
+
   // Lähetys HA:han esim. 30s välein
   static unsigned long lastMsg = 0;
-  if (millis() - lastMsg > 30000) {
+  if (client.connected() && millis() - lastMsg > 30000) {
     lastMsg = millis();
-    client.publish("home/sensor/esp32_temp/state", String(t).c_str());
+    char timestamp[32];
+    if (utcTimestamp(timestamp, sizeof(timestamp))) {
+      String payload = "{\"sensor_id\":\"bmp280_sisatila\",\"location\":\"sisatila\",\"measured_at\":\"";
+      payload += timestamp;
+      payload += "\",\"schema\":2,\"values\":{\"temperature\":";
+      payload += String(t, 2);
+      payload += "},\"units\":{\"temperature\":\"°C\"}}";
+      client.publish(slow_state_topic, payload.c_str());
+    } else {
+      Serial.println("NTP-aikaa ei ole vielä saatavilla; MQTT-julkaisu ohitetaan.");
+    }
   }
 }

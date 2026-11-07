@@ -1,80 +1,68 @@
-# esp32
+# ESP32-S3 RGB-lämpömittari
 
-Hakemistoittain erilaisia ESP32-virityksiä, kokeiluja ja muistiinpanoja.
+ESP32-S3, BMP280 ja yksi NeoPixel: LED näyttää lämpötilan värinä ja
+mittaukset julkaistaan MQTT:llä Home Assistantiin.
 
-Käyttö omalla vastuulla :)
+## Laitteisto
 
-## Nykyinen laite
+Nykyinen kokoonpano käyttää geneeristä ESP32-S3 N16R8 -lautaa.
+PlatformIO-profiili on `esp32s3usbotg`, board `freenove_esp32_s3_wroom`,
+16 MB flash ja QIO/OPI-muistiasetukset. Tarkista oman laudan yhteensopivuus.
+BMP280:n I2C: SDA GPIO 8, SCL GPIO 9; osoitteet 0x76 ja 0x77.
+NeoPixel: GPIO 48. Varmista oman laudan pinnit ja kytkennät ennen käyttöä.
 
-Projektissa käytössä oleva kehityslauta on geneerinen ESP32-S3 DevKit -tyylinen
-N16R8-controlleri kahdella USB-C-liittimellä.
+## Käyttöönotto
 
-- MCU: ESP32-S3
-- Muisti: N16R8 tarkoittaa yleensä 16 MB flash + 8 MB PSRAM
-- USB-C COM -portti: erillinen USB-UART-silta
-- USB-C USB -portti: ESP32-S3:n native USB / OTG / CDC / JTAG -puoli
-- macOS:ssa käytössä oleva COM-portti: `/dev/cu.usbmodem5B8F0714901`
-- USB-sarjapiiri tunnistui nimellä `USB Single Serial`, vendor `0x1A86`
+1. Asenna VS Code ja PlatformIO IDE (`platformio.platformio-ide`).
+2. Avaa tämä kansio VS Codessa (`platformio.ini` juurihakemistossa).
+3. Kopioi `bmp280_rgbled_ha/env.example.h` tiedostoksi `env.h` samaan kansioon
+   ja täytä Wi-Fi- ja MQTT-asetukset. Älä lisää tunnustiedostoa Gitiin.
+4. Kytke USB-datakaapeli laudan COM-/USB-UART-liittimeen.
+5. Avaa PlatformIO-kuvake ja **Project Tasks → esp32s3usbotg → General**.
+   **Build** kääntää, **Upload** lataa ja **Monitor** näyttää sarjalokin.
+   Sulje Monitor ennen lataamista. Sarjanopeus on 115200.
 
-PlatformIOssa upload ja monitorointi tehdään COM-portin kautta:
+PlatformIO-terminalissa:
 
-```ini
-board = freenove_esp32_s3_wroom
-board_build.flash_size = 16MB
-board_upload.flash_size = 16MB
-board_build.partitions = default_16MB.csv
-board_build.arduino.memory_type = qio_opi
-upload_protocol = esptool
-upload_port = /dev/cu.usbmodem5B8F0714901
-monitor_port = /dev/cu.usbmodem5B8F0714901
+```sh
+pio device list
+pio run -e esp32s3usbotg
+pio run -e esp32s3usbotg -t upload
+pio device monitor -b 115200
 ```
 
-Firmware on asetettu käyttämään UART-serialia, ei ESP32-S3:n native USB CDC:tä:
+Sarjaportti tunnistetaan automaattisesti. Jos laitteita on useita, määritä
+oman koneesi `upload_port` ja `monitor_port` tiedostossa `platformio.ini`.
+PlatformIO löytyy myös komentopaletista: **PlatformIO: Home**.
+Devices näyttää portit, Inspect muistinkäytön ja Monitor laitteen tulosteet.
 
-```ini
--D ARDUINO_USB_MODE=0
--D ARDUINO_USB_CDC_ON_BOOT=0
--D ARDUINO_USB_DFU_ON_BOOT=0
--D ARDUINO_USB_MSC_ON_BOOT=0
-```
+## Toiminta
 
-Nykyinen PlatformIO-board on `freenove_esp32_s3_wroom`, koska se on lähellä
-geneeristä ESP32-S3 WROOM -lautaa ja käyttää valmiiksi UART/COM-porttia
-serialiin. Boardin oletus on N8R8, joten projektissa flash-koko on
-ylikirjoitettu N16R8-laudalle 16 MB:ksi.
+Käynnistyksen noin 14 sekunnin demo käy väriskaalan läpi molempiin suuntiin
+ja vilkuttaa punaista ja sinistä. Sen jälkeen käytetään oikeaa lämpötilaa:
+alle 30 °C LED on pimeä; 30–40 °C väri muuttuu sinisestä punaiseen.
+RESET-painike käynnistää demon uudestaan.
 
-## Lämpötila-anturi
+MQTT-yhteyttä yritetään heti ja epäonnistumisen jälkeen minuutin tauolla,
+enintään 10 peräkkäistä epäonnistumista. Onnistuminen nollaa laskurin.
+Anturi ja LED toimivat yritysten välillä. Yksittäinen synkroninen yritys
+voi viivästyttää silmukkaa. Wi-Fi-yhteyden odotus käynnistyksessä on edelleen
+estävää. Puuttuvan anturin käsittely on keskeneräinen.
 
-Lämpötilan mittaukseen käytetään BMP280-anturia Adafruitin BMP280-kirjastolla.
-Anturi on I2C-väylässä:
+MQTT käyttää porttia 1883 ilman TLS:ää. Tilaviesti on schema 2 -JSON
+aiheessa `sensors/bmp280_sisatila/state`, lämpötila `values.temperature`.
+Home Assistant discovery lähetetään retained-viestinä aiheeseen
+`homeassistant/sensor/esp32_temp/config`. Vaihda laite- ja sensoritunnukset,
+jos käytät useampaa laitetta. Julkaisu edellyttää NTP-aikaa.
 
-- SDA: GPIO 8
-- SCL: GPIO 9
-- I2C-osoitteet joita kokeillaan: `0x76` ja `0x77`
-- Kirjasto: `adafruit/Adafruit BMP280 Library`
+Tarkempi toimintakuvaus: [TOIMINTA.md](bmp280_rgbled_ha/TOIMINTA.md).
 
-Koodi alustaa I2C:n näin:
+## Kytkentäkuvat ja kotelo
 
-```cpp
-Wire.begin(8, 9);
-```
+![Kotelon pohja ja kansi](bmp280_rgbled_ha/cad/kotelo-esikatselu.png)
 
-Lämpötila luetaan funktiolla:
+[Kytkentäkuvat](bmp280_rgbled_ha/docs/README.md) sisältävät kaavion ja
+omien lautojen kuvaan merkityt liitäntäparit.
 
-```cpp
-bmp.readTemperature();
-```
-
-BMP280 mittaa lämpötilan ja ilmanpaineen. Tässä projektissa käytetään vain
-lämpötilaa, joka julkaistaan MQTT:lla Home Assistantiin aiheeseen
-`home/sensor/esp32_temp/state`.
-
-## Muut kytkennät
-
-Laudan sisäinen RGB/NeoPixel LED on koodissa GPIO 48:ssa:
-
-```cpp
-#define LED_PIN 48
-```
-
-LED pysyy pimeänä alle 30 C lämpötilassa ja vaihtaa väriä 30-40 C välillä.
+[Uusin kotelomalli (3MF)](bmp280_rgbled_ha/cad/Kotelo_tasainen_3mm.3mf)
+sekä [mallin huomautukset](bmp280_rgbled_ha/cad/README.md).

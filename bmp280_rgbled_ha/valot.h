@@ -13,12 +13,12 @@ void setupLedi() {
 void paivitaLedi(float t) {
   if (t < 30.0) {
     // Alle 30: Pidetään ledi pimeänä
-    pixel.setPixelColor(0, pixel.Color(0, 0, 0)); 
-  } 
+    pixel.setPixelColor(0, pixel.Color(0, 0, 0));
+  }
   else {
     // --- HSV-säätö ---
-    uint8_t saturation = 255; 
-    uint8_t value = 100;      
+    uint8_t saturation = 255;
+    uint8_t value = 100;
 
     // Lämpötila 30.0 - 40.0 skaalataan Hue-arvoksi.
     // 30C = Sininen (43690)

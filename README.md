@@ -62,3 +62,11 @@ Tarkempi toimintakuvaus: [TOIMINTA.md](bmp280_rgbled_ha/TOIMINTA.md).
 Firmware on käännetty PlatformIOlla ja ladattu ESP32-S3-laitteeseen.
 RGB-demo on kokeiltu laitteella. MQTT-yhteyden palautumista ja kaikkia
 kymmentä yhteysyritystä ei ole vielä testattu laitteella.
+
+## Kytkentäkuvat ja kotelo
+
+[Kytkentäkuvat](bmp280_rgbled_ha/docs/README.md) sisältävät kaavion ja
+omien lautojen kuvaan merkityt liitäntäparit.
+
+[Uusin kotelomalli (3MF)](bmp280_rgbled_ha/cad/Kotelo_tasainen_3mm.3mf)
+sekä [mallin huomautukset](bmp280_rgbled_ha/cad/README.md).

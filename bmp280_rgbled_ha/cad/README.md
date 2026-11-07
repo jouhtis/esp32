@@ -1,5 +1,7 @@
 # Tulostettava kotelo
 
+![Kotelon pohja ja kansi](kotelo-esikatselu.png)
+
 [Lataa 3MF: Kotelo_tasainen_3mm.3mf](Kotelo_tasainen_3mm.3mf)
 
 Sisältää pohjan ja tasaisen kannen erillisinä objekteina. Pienet

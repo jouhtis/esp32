@@ -59,6 +59,8 @@ Tarkempi toimintakuvaus: [TOIMINTA.md](bmp280_rgbled_ha/TOIMINTA.md).
 
 ## Kytkentäkuvat ja kotelo
 
+![Kotelon pohja ja kansi](bmp280_rgbled_ha/cad/kotelo-esikatselu.png)
+
 [Kytkentäkuvat](bmp280_rgbled_ha/docs/README.md) sisältävät kaavion ja
 omien lautojen kuvaan merkityt liitäntäparit.
 

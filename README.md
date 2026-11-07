@@ -57,12 +57,6 @@ jos käytät useampaa laitetta. Julkaisu edellyttää NTP-aikaa.
 
 Tarkempi toimintakuvaus: [TOIMINTA.md](bmp280_rgbled_ha/TOIMINTA.md).
 
-## Tarkistukset
-
-Firmware on käännetty PlatformIOlla ja ladattu ESP32-S3-laitteeseen.
-RGB-demo on kokeiltu laitteella. MQTT-yhteyden palautumista ja kaikkia
-kymmentä yhteysyritystä ei ole vielä testattu laitteella.
-
 ## Kytkentäkuvat ja kotelo
 
 [Kytkentäkuvat](bmp280_rgbled_ha/docs/README.md) sisältävät kaavion ja

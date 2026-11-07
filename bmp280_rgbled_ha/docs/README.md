@@ -5,8 +5,6 @@
 ![BMP280:n ja ESP32-S3:n merkityt liitäntäparit](kytkennat-omilla-laudoilla.svg)
 
 Kuva on otettu ennen johdotusta. Värilliset numerot osoittavat liitäntäparit.
-Valokuva on pienennetty 1400 pikselin enimmäismittaan; merkinnät ovat vektoreita.
-Kuvan valokuvan EXIF-metatiedot on poistettu.
 
 ## Kytkentäkaavio
 

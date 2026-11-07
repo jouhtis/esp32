@@ -1,6 +1,6 @@
 # Tulostettava kotelo
 
-[Uusin 3MF: Kotelo_tasainen_3mm.3mf](Kotelo_tasainen_3mm.3mf)
+[Lataa 3MF: Kotelo_tasainen_3mm.3mf](Kotelo_tasainen_3mm.3mf)
 
 Sisältää pohjan ja tasaisen kannen erillisinä objekteina. Pienet
 merkkivaloaukot on suljettu; RGB-LEDin ja anturin aukot säilyvät.

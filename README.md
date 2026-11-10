@@ -59,10 +59,12 @@ Tarkempi toimintakuvaus: [TOIMINTA.md](bmp280_rgbled_ha/TOIMINTA.md).
 
 ## Kytkentäkuvat ja kotelo
 
-![Kotelon pohja ja kansi](bmp280_rgbled_ha/cad/kotelo-esikatselu.png)
+![Kotelon pohja ja kansi](bmp280_rgbled_ha/cad/kotelo_2_5mm_viistosta.png)
 
 [Kytkentäkuvat](bmp280_rgbled_ha/docs/README.md) sisältävät kaavion ja
 omien lautojen kuvaan merkityt liitäntäparit.
 
-[Uusin kotelomalli (3MF)](bmp280_rgbled_ha/cad/Kotelo_tasainen_3mm.3mf)
-sekä [mallin huomautukset](bmp280_rgbled_ha/cad/README.md).
+[Lataa kotelo (3MF)](bmp280_rgbled_ha/cad/Kotelo_2_5mm_hampaat.3mf) ·
+[CAD-lähde ja tulostusohje](bmp280_rgbled_ha/cad/README.md)
+
+Madallettu pohja ja kansi 2,5 mm painikejatkoilla sekä neljällä kiinnityshampaalla.

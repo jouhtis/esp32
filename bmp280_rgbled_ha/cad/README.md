@@ -1,13 +1,19 @@
 # Tulostettava kotelo
 
-![Kotelon pohja ja kansi](kotelo-esikatselu.png)
+Kotelo ESP32-S3- ja BMP280-kokoonpanolle: madallettu pohja, tasainen kansi,
+2,5 mm painikejatkot ja neljä kiinnityshammasta.
 
-[Lataa 3MF: Kotelo_tasainen_3mm.3mf](Kotelo_tasainen_3mm.3mf)
+![Pohja ja kansi sisäpuoli ylöspäin](kotelo_2_5mm_viistosta.png)
 
-Sisältää pohjan ja tasaisen kannen erillisinä objekteina. Pienet
-merkkivaloaukot on suljettu; RGB-LEDin ja anturin aukot säilyvät.
-Painikejatkot ovat 3 mm. Käytännön sovitus, nappien vapaa liike ja
-komponenttien välykset ovat vielä varmistamatta.
+## Tiedostot
+
+- [Pohja ja kansi – 3MF](Kotelo_2_5mm_hampaat.3mf)
+- [Vain kansi – 3MF](Kansi_2_5mm_hampaat.3mf)
+- [Pohjan ja kannen FreeCAD-lähde](Kotelo_2_5mm_hampaat.FCStd)
+- [Kuva ylhäältä](kotelo_2_5mm_ylhaalta.png) · [Kannen sisäpuoli](kansi_2_5mm_sisapuoli.png)
+
+## Tulostus
 
 3MF sisältää geometrian, ei tulostusprofiilia. Tarkista tulostussuunta,
 kerrosnäkymä ja materiaaliasetukset viipalointiohjelmassa.
+Varmista kootessa painikkeiden vapaa liike ja komponenttien välykset.

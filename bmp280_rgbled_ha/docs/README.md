@@ -1,17 +1,22 @@
-# Kytkentäkuvat
+# Wiring guide
 
-## Liitäntäparit omilla laudoilla
+[Suomeksi](README_fi.md)
 
-![BMP280:n ja ESP32-S3:n merkityt liitäntäparit](kytkennat-omilla-laudoilla.png)
+## Matching pins on the boards
 
-[Avaa vektorikuva (SVG)](kytkennat-omilla-laudoilla.svg).
+![Matching pins on the BMP280 and ESP32-S3 boards](kytkennat-omilla-laudoilla.png)
 
-Kuva on otettu ennen johdotusta. Värilliset numerot osoittavat liitäntäparit.
+[Open the vector image (SVG)](kytkennat-omilla-laudoilla.svg)
 
-## Kytkentäkaavio
+The photo shows the boards before wiring. Matching colored numbers
+indicate which pins to connect.
 
-![ESP32-S3 ja BMP280](kytkentakaavio.svg)
+## Schematic
 
-BMP280: 3V3, GND, SDA GPIO 8 ja SCL GPIO 9. Laudan oma RGB-LED: GPIO 48.
-Tarkista oman laudan pinout sekä anturilevyn CSB-, SDO- ja vetovastuskytkennät.
-Kuvat eivät varmista valmiin johdotuksen oikeellisuutta.
+![ESP32-S3 and BMP280 schematic](kytkentakaavio.svg)
+
+Connect the BMP280's 3V3 and GND pins to the corresponding pins on the
+ESP32-S3, SDA to GPIO 8, and SCL to GPIO 9. The onboard RGB LED uses
+GPIO 48. Check your board's pinout and the sensor board's CSB, SDO, and
+pull-up resistor connections. Verify the finished wiring against your
+actual boards.

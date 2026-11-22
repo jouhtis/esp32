@@ -32,12 +32,16 @@ void loop() {
     lastMsg = millis();
     char timestamp[32];
     if (utcTimestamp(timestamp, sizeof(timestamp))) {
-      String payload = "{\"sensor_id\":\"bmp280_sisatila\",\"location\":\"sisatila\",\"measured_at\":\"";
+      String payload = "{\"sensor_id\":\"";
+      payload += MqttDevice::sensorId;
+      payload += "\",\"location\":\"";
+      payload += MqttDevice::location;
+      payload += "\",\"measured_at\":\"";
       payload += timestamp;
       payload += "\",\"schema\":2,\"values\":{\"temperature\":";
       payload += String(t, 2);
       payload += "},\"units\":{\"temperature\":\"°C\"}}";
-      client.publish(slow_state_topic, payload.c_str());
+      client.publish(MqttDevice::stateTopic.c_str(), payload.c_str());
     } else {
       Serial.println("NTP-aikaa ei ole vielä saatavilla; MQTT-julkaisu ohitetaan.");
     }

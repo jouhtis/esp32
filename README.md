@@ -49,13 +49,12 @@ Anturi ja LED toimivat yritysten välillä. Yksittäinen synkroninen yritys
 voi viivästyttää silmukkaa. Wi-Fi-yhteyden odotus käynnistyksessä on edelleen
 estävää. Puuttuvan anturin käsittely on keskeneräinen.
 
-MQTT käyttää porttia 1883 ilman TLS:ää. Tilaviesti on schema 2 -JSON
-aiheessa `sensors/bmp280_sisatila/state`, lämpötila `values.temperature`.
-Home Assistant discovery lähetetään retained-viestinä aiheeseen
-`homeassistant/sensor/esp32_temp/config`. Vaihda laite- ja sensoritunnukset,
-jos käytät useampaa laitetta. Julkaisu edellyttää NTP-aikaa.
+Jokainen ESP32 muodostaa tunnisteensa tehdas-MAC-osoitteesta ja ilmestyy
+Home Assistantiin omana BMP280-mittarinaan. Samassa Wi-Fi-verkossa ja samalla
+MQTT-brokerilla voit ladata kaikille saman binäärin. Valitse mittarin nimi
+ja alue Home Assistantissa.
 
-Tarkempi toimintakuvaus: [TOIMINTA.md](bmp280_rgbled_ha/TOIMINTA.md).
+[Uuden mittarin käyttöönotto ja päivitys vanhasta firmwaresta](bmp280_rgbled_ha/TOIMINTA.md).
 
 ## Kytkentäkuvat ja kotelo
 

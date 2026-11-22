@@ -37,13 +37,46 @@ Nimipalvelun viive voi pidentää odotusta.
 
 Sarjaloki toimii nopeudella 115200 ja tulostaa lämpötilan 5 sekunnin välein.
 MQTT-tilaviesti lähetetään 30 sekunnin välein, kun yhteys ja NTP-aika ovat
-saatavilla. Aihe on `sensors/bmp280_sisatila/state`, sisältö schema 2 -JSON
-ja lämpötila kentässä `values.temperature`. Viesti ei ole retained.
+saatavilla. Aihe on `sensors/bmp280_<mac>/state`. Schema 2 -JSON sisältää
+laitekohtaisen `sensor_id`:n, yleisen `location`-luokituksen `sisatila` ja
+lämpötilan kentässä `values.temperature`. Tilaviestiä ei säilytetä brokerilla.
 
-Home Assistant discovery lähetetään jokaisen onnistuneen yhdistämisen
-jälkeen retained-viestinä aiheeseen `homeassistant/sensor/esp32_temp/config`.
-Sensorin tunnus on `esp32s3_bmp280_01` ja laitteen `esp32s3_01`.
-Vaihda tunnukset `wifi_mqtt.h`:ssa, jos käytät useampaa laitetta.
+Firmware muodostaa tunnisteen `bmp280_<mac>` ESP32:n tehdas-MAC-osoitteesta.
+MAC-osa koostuu 12 pienestä heksamerkistä ilman erottimia, esimerkiksi
+`bmp280_001122aabbcc`. MQTT-asiakastunnus, `sensor_id`, Home Assistantin
+`unique_id` ja discovery-laitetunniste käyttävät samaa arvoa. IP-osoitteen
+vaihtuminen ei vaikuta tunnisteeseen. Jos tehdas-MAC:n luku epäonnistuu,
+anturi ja LED toimivat edelleen ja MQTT-julkaisu jää pois.
+
+Onnistuneen MQTT-yhdistämisen jälkeen firmware julkaisee säilytetyn
+discovery-viestin aiheeseen `homeassistant/sensor/bmp280_<mac>/config`.
+Home Assistantin oletusnimi laitteelle on **BMP280-mittari** ja anturille
+**Lämpötila**.
+
+### Uuden mittarin käyttöönotto
+
+1. Täytä Wi-Fi- ja MQTT-asetukset paikalliseen `env.h`:hon ja varmista,
+   että Home Assistantin MQTT-integraatio on yhdistetty samaan brokeriin.
+2. Lataa `esp32s3usbotg`-firmware yhteensopivaan ESP32-S3-lautaan. Kun
+   Wi-Fi- ja MQTT-asetukset ovat yhteiset, voit käyttää samaa binääriä
+   kaikilla laudoilla.
+3. Kun mittari on käynnistynyt, avaa Home Assistantin MQTT-integraatio.
+   Valitse uusi **BMP280-mittari**, nimeä se ja määritä alue. Anturi perii
+   alueen laitteelta.
+4. Varmista, että uuden anturin lämpötilalukema päivittyy ja aiemmat
+   mittarit lähettävät edelleen omiin entiteetteihinsä.
+
+### Päivitys vanhasta firmwaresta
+
+Vanha firmware käytti yhteistä discovery-aihetta
+`homeassistant/sensor/esp32_temp/config`. Päivityksen jälkeen MAC-pohjainen
+tunniste näkyy Home Assistantissa uutena laitteena. Tarkista ensin, että
+uusi anturi saa mittauslukeman. Jos vanha discovery-määritys jää brokeriin,
+poista se lähettämällä vanhaan discovery-aiheeseen tyhjä säilytetty viesti.
+Palauta laitteen nimi ja alue tarvittaessa. Voit antaa uudelle anturille
+vanhan `entity_id`:n, kun se on vapautunut, jotta aiemmat kojelauta- ja
+automaatioviittaukset toimivat. Tarkista myös, että aiempi mittaushistoria
+näkyy samalla tunnuksella.
 
 ## Tunnetut rajoitukset
 
@@ -51,5 +84,6 @@ Wi-Fi-yhteyden odotus estää jatkuvan mittaamisen käynnistyksessä.
 Jos BMP280 ei löydy, ohjelma jatkaa ja voi julkaista virheellisen lukeman.
 MQTT-yhteyden palautumista ja kymmenen yrityksen rajaa ei ole vielä
 varmistettu laitteella.
+Kahden fyysisen mittarin yhtäaikainen käyttö on vielä testaamatta.
 
 [Kytkentäkuvat](docs/README.md) · [Kotelomalli](cad/README.md)
